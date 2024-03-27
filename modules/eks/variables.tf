@@ -1,10 +1,13 @@
-
 variable "cluster_name" {
   description = "EKS cluster name"
   type        = string
   default     = ""
 }
 
+variable "eks_version" {
+  description = "Kubernetes version, will be used in AWS resources names and to specify which EKS version to create/update"
+  type        = string
+}
 variable "account_id" {
   description = "AWS account ID"
   type        = string
