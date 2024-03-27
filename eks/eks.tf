@@ -49,7 +49,7 @@ module "eks" {
   aws_auth_users = var.eks_aws_auth_users
   aws_auth_roles = [
     {
-      userarn  = aws_iam_role.eks_masters_access_role.arn
+      rolearn  = aws_iam_role.eks_masters_access_role.arn
       username = aws_iam_role.eks_masters_access_role.arn
       groups   = ["system:masters"]
     }
@@ -208,7 +208,6 @@ data "tls_certificate" "cluster" {
     aws_eks_cluster.kube_cluster
   ]
 }
-
 data "aws_caller_identity" "current" {}
 
 

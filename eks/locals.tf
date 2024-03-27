@@ -1,5 +1,4 @@
 locals {
-  account_id  = data.aws_caller_identity.current.id_account
   name_prefix = var.environment
 
   tags = {
