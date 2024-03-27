@@ -4,7 +4,7 @@
 ##################################################################################################################
 module "load_balancer_controller_irsa_role" {
   source                                 = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  role_name                              = "${var.cluster_name}-${var.region}-${var.env}-load-balancer-controller"
+  role_name                              = "${var.cluster_name}-${var.region}-${var.environment}-load-balancer-controller"
   role_permissions_boundary_arn          = var.iam_role_permissions_boundary
   attach_load_balancer_controller_policy = true
   policy_name_prefix                     = var.policy_name_prefix
@@ -19,7 +19,7 @@ module "load_balancer_controller_irsa_role" {
 
 module "external_dns_irsa_role" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  role_name                     = "${var.cluster_name}-${var.region}-${var.env}-ExternalDNSService"
+  role_name                     = "${var.cluster_name}-${var.region}-${var.environment}-ExternalDNSService"
   role_permissions_boundary_arn = var.iam_role_permissions_boundary
   external_dns_hosted_zone_arns = [data.aws_route53_zone.eks_hosted_zone.arn]
   policy_name_prefix            = var.policy_name_prefix
@@ -35,7 +35,7 @@ module "external_dns_irsa_role" {
 
 module "vpc_cni_ipv4_irsa_role" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  role_name                     = "${var.cluster_name}-${var.region}-${var.env}-vpc-cni-ipv4"
+  role_name                     = "${var.cluster_name}-${var.region}-${var.environment}-vpc-cni-ipv4"
   attach_vpc_cni_policy         = true
   policy_name_prefix            = var.policy_name_prefix
   role_permissions_boundary_arn = var.iam_role_permissions_boundary
@@ -51,7 +51,7 @@ module "vpc_cni_ipv4_irsa_role" {
 
 module "ebs_csi_irsa_role" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  role_name                     = "${var.cluster_name}-${var.region}-${var.env}-ebs-csi"
+  role_name                     = "${var.cluster_name}-${var.region}-${var.environment}-ebs-csi"
   attach_ebs_csi_policy         = true
   policy_name_prefix            = var.policy_name_prefix
   role_permissions_boundary_arn = var.iam_role_permissions_boundary
@@ -66,7 +66,7 @@ module "ebs_csi_irsa_role" {
 
 module "cluster_autoscaler_irsa_role" {
   source                           = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  role_name                        = "${var.cluster_name}-${var.region}-${var.env}-cluster-autoscaler"
+  role_name                        = "${var.cluster_name}-${var.region}-${var.environment}-cluster-autoscaler"
   policy_name_prefix               = var.policy_name_prefix
   role_permissions_boundary_arn    = var.iam_role_permissions_boundary
   attach_cluster_autoscaler_policy = true
@@ -82,7 +82,7 @@ module "cluster_autoscaler_irsa_role" {
 
 module "karpenter_controller_irsa_role" {
   source                             = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  role_name                          = "${var.cluster_name}-${var.region}-${var.env}-karpenter-controller"
+  role_name                          = "${var.cluster_name}-${var.region}-${var.environment}-karpenter-controller"
   role_permissions_boundary_arn      = var.iam_role_permissions_boundary
   attach_karpenter_controller_policy = true
   policy_name_prefix                 = var.policy_name_prefix
