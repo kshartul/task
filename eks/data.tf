@@ -34,8 +34,6 @@ data "aws_route53_zone" "eks_hosted_zone" {
   private_zone = true
 }
 
-## Getting aws account ID 
-data "aws_caller_identity" "id_account" {}
 
 data "aws_availability_zones" "available" {
   state = "available"
