@@ -39,11 +39,6 @@ jobs:
 
     - name: Create to S3-bucket - terraform backend
       run: |   
-           bucketExists="$(aws s3api list-buckets --output text --query "Buckets[?Name=='$S3_BUCKET_NAME'].Name")"
-           if [ "$bucketExists" == "$S3_BUCKET_NAME" ]; then
-            echo "bucket exists"
-           else
-
            if [ "$AWS_REGION" != 'us-east-1' ]; then
             aws s3api create-bucket --bucket $S3_BUCKET_NAME --region $AWS_REGION --create-bucket-configuration LocationConstraint=$AWS_REGION
            else 
