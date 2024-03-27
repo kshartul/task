@@ -61,21 +61,19 @@ jobs:
 
     - name: Run terraform init
       id: init
-      run: |
-            BUCKET_NAME="tf-state-lock-${{ env.ENVIRONMENT }}-${{ env.AWS_REGION }}" 
-            DYNAMODB_TABLE="tf-state-${{ env.ENVIRONMENT }}-${{ env.AWS_REGION }}"
+      run: |           
             terraform init \
             -backend-config=bucket="$S3_BUCKET_NAME" \
             -backend-config=region='${{ env.AWS_REGION }}' \
             -backend-config=key='state' \
-                    -backend-config=dynamodb_table="$DYNAMODB_TABLE"
+            -backend-config=dynamodb_table="$DYNAMODB_TABLE"
       shell: bash
       working-directory: '${{ env.WORKING_DIRECTORY }}'
     - name: Run terraform validate
       id: 'tf-validate'
       run: terraform validate
       shell: bash
-      working-directory: '.${{ env.WORKING_DIRECTORY }}'
+      working-directory: '${{ env.WORKING_DIRECTORY }}'
     
     - name: Run terraform plan
       id: terraform-plan
