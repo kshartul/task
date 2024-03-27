@@ -92,7 +92,7 @@ variable "eks_module_version" {
   default     = ""
 }
 
-variable "env" {
+variable "environment" {
   description = "This is the environment to which the cluster is deployed"
   type        = string
   default     = ""
@@ -214,7 +214,25 @@ variable "create_kms_key" {
   type        = bool
   default     = false
 }
+variable "kms_arn" {
+  type = string
+}
+variable "cluster_enabled_log_types" {
+  description = "A list of the desired control plane logs to enable. For more information, see Amazon EKS Control Plane Logging documentation (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html)"
+  type        = list(string)
+  default     = ["audit", "api", "authenticator"]
+}
+variable "private_endpoint_api" {
+  description = "Whether the Amazon EKS private API server endpoint is enabled"
+  type        = bool
+  default     = true
+}
 
+variable "public_endpoint_api" {
+  description = "Whether the Amazon EKS private API server endpoint is enabled"
+  type        = bool
+  default     = false
+}
 variable "kms_key_description" {
   description = "The description of the key as viewed in AWS console"
   type        = string
@@ -225,6 +243,23 @@ variable "kms_key_deletion_window_in_days" {
   description = "The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key. If you specify a value, it must be between `7` and `30`, inclusive. If you do not specify a value, it defaults to `30`"
   type        = number
   default     = null
+}
+variable "AMI_for_worker_nodes" {
+  description = "the AWS AMI to use in the worker nodes"
+  type        = string
+}
+variable "instance_type_worker_nodes" {
+  description = "a list with the instances types to use for eks worker nodes"
+  type        = list(any)
+}
+variable "min_instances_node_group" {
+  description = "minimum number of instance to use in the node group"
+  type        = number
+}
+
+variable "max_instances_node_group" {
+  description = "max number of instance to use in the node group"
+  type        = number
 }
 
 variable "enable_kms_key_rotation" {

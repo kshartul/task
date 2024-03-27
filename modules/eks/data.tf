@@ -35,6 +35,3 @@ data "aws_route53_zone" "eks_hosted_zone" {
   private_zone = true
 }
 
-data "external" "iam_role_check" {
-  program = ["bash", "${path.module}/check_role.sh", "${var.env}-${var.region}-iam_role_sa"]
-}
