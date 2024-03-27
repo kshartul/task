@@ -1,5 +1,5 @@
-#vpc_cidr      = "10.0.1.0/24"
-environment   = "prod"
+
+environment   = "dev"
 region        = "us-east-1"
 vpc_params = {
   vpc_cidr               = "10.1.0.0/16"
@@ -40,8 +40,8 @@ eks_managed_node_group_params = {
 
 eks_aws_auth_users  = [
   {
-    userarn  = "arn:aws:iam::492***148:user/arseny"
-    username = "arseny"
+    userarn  = "arn:aws:iam:${local.account_id}:user/sh01"
+    username = "sh01"
     groups   = ["system:masters"]
   }
 ]
