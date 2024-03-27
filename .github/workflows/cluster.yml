@@ -39,7 +39,7 @@ jobs:
 
     - name: Create to S3-bucket - terraform backend
       run: |   
-        aws s3api create-bucket --bucket $S3_BUCKET_NAME --region $AWS_REGION --create-bucket-configuration LocationConstraint=$AWS_REGION
+        aws s3api create-bucket --bucket $S3_BUCKET_NAME --region $AWS_REGION --create-bucket-configuration 
         aws s3api put-bucket-versioning --bucket $S3_BUCKET_NAME--versioning-configuration Status=Enabled --region $AWS_REGION
     
     - name: Create DynamoDB Table 
