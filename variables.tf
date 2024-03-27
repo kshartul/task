@@ -2,7 +2,8 @@ variable "vpc_cidr" {
   type = string 
 }
 variable "environment" {
-  type = string
+  description = "Dev/Prod, will be used in AWS resources Name tag, and resources names"
+  type        = string
 }
 variable "region" {
   type = string
@@ -24,11 +25,6 @@ variable "project_name" {
 variable "component" {
   description = "A team using this project (backend, web, ios, data, devops)"
   type = string
-}
-
-variable "environment" {
-  description = "Dev/Prod, will be used in AWS resources Name tag, and resources names"
-  type        = string
 }
 
 variable "eks_version" {

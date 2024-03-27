@@ -20,11 +20,11 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "tfvars-envs"
-    region = var.region
-    key    = "dev/terraform.tfstate"
-    dynamodb_table = "" 
-    encrypt        = true
+    #bucket = "tfvars-envs"
+    #region = var.region
+    #key    = "dev/terraform.tfstate"
+    #dynamodb_table = "" 
+    #encrypt        = true
   }   
 }
 
