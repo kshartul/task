@@ -1,0 +1,68 @@
+name: Deploy to ECR
+
+on:
+  workflow_dispatch
+  #push:
+  #  branches: [ main ]
+
+env:
+  ECR_REPOSITORY: test01
+  EKS_CLUSTER_NAME: eks-test01
+  AWS_REGION: us-east-1
+  S3_BUCKET_NAME: eksstatebucket01
+  TF_STATE_CONTAINER_NAME: tfstate
+  TF_STATE_FILE_NAME: akscluster01.tfstate
+  TF_STATE_ACCESS_KEY: "" # will be set later
+
+jobs:
+  build: 
+    name: Deployment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set short git commit SHA
+      id: commit
+      uses: prompt/actions-commit-hash@v2
+
+    - name: Check out code
+      uses: actions/checkout@v2
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{env.AWS_REGION}}
+    - name: Create to S3-bucket - terraform backend
+      run: |   
+        aws s3api create-bucket --bucket $S3_BUCKET_NAME --region $AWS_REGION  
+
+        - name: Terraform init
+        id: init
+        run: |
+            terraform init \
+              -backend-config="S3_BUCKET_NAME=$TF_STATE_S3_BUCKET_NAME" \
+              -backend-config="container_name=$TF_STATE_CONTAINER_NAME" \
+              -backend-config="access_key=$TF_STATE_ACCESS_KEY" \
+              -backend-config="key=$TF_STATE_FILE_NAME" 
+    
+      
+    - name: Terraform install
+      id: 'install-terraform'
+      uses: hashicorp/setup-terraform@v2
+      with: 
+        terraform_version: '${{ env.TERRAFORM_VERSION }}'
+    - name: Validate terraform version
+      id: validate-tf-version
+      run: terraform version
+      shell: bash          
+    - name: Terraform validate
+      id: validate
+      run: terraform validate -no-color
+
+    - name: Terraform plan
+      id: plan
+      run: terraform plan -no-color
+
+    - name: Terraform apply
+      id: apply
+      run: terraform apply -auto-approve  
