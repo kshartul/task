@@ -209,8 +209,6 @@ data "tls_certificate" "cluster" {
   ]
 }
 
-## Getting aws account ID 
-data "aws_caller_identity" "id_account" {}
-
+data "aws_caller_identity" "current" {}
 
 

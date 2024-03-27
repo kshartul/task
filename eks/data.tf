@@ -34,7 +34,6 @@ data "aws_route53_zone" "eks_hosted_zone" {
   private_zone = true
 }
 
-
 data "aws_availability_zones" "available" {
   state = "available"
 }

@@ -39,8 +39,8 @@ eks_managed_node_group_params = {
 
 eks_aws_auth_users  = [
   {
-    userarn  = "arn:aws:iam::492***148:user/arseny"
-    username = "arseny"
+    userarn  = "arn:aws:iam:${local.account_id}:user/sh01"
+    username = "sh01"
     groups   = ["system:masters"]
   }
 ]
