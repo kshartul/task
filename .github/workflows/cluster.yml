@@ -69,8 +69,8 @@ jobs:
             -backend-config=region='${{ env.AWS_REGION }}' \
             -backend-config=key='state' \
                     -backend-config=dynamodb_table="$DYNAMODB_TABLE"
-              shell: bash
-              working-directory: '${{ env.WORKING_DIRECTORY }}'
+      shell: bash
+      working-directory: '${{ env.WORKING_DIRECTORY }}'
     - name: Run terraform validate
       id: 'tf-validate'
       run: terraform validate
