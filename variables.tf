@@ -36,6 +36,3 @@ variable "vpc_params" {
     vpc_cidr  = string
   })
 }
-variable "region" {
-  type = string
-}
