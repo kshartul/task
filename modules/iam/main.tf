@@ -1,5 +1,5 @@
 resource "aws_iam_role" "terraform" {
-  name = "Terraform"
+  name = "tf-admin"
 
   assume_role_policy = data.aws_iam_policy_document.terraform_assume_role.json
 }
