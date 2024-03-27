@@ -6,12 +6,6 @@ terraform {
     }
   }
   required_version = ">= 1.4"
-
-  backend "s3" {
-    bucket = "tfvars-envs"
-    region = var.region
-    key    = "prod/terraform.tfstate"
-  }   
 }
 
 provider "aws" {
