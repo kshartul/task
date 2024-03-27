@@ -135,7 +135,7 @@ module "eks" {
       taints = var.eks_managed_node_group_params.default_group.taints
 
       update_config = {
-        max_unavailable_percentage = var. .default_group.max_unavailable_percentage
+        max_unavailable_percentage = var.eks_managed_node_group_params.default_group.max_unavailable_percentage
       }
     }
   }
