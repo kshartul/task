@@ -1,7 +1,7 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.0"
-  cluster_name    = "${var.environment}-eks-cluster"
+  cluster_name    = "${var.cluster_name}-eks-cluster"
   cluster_version = var.eks_version
   cluster_endpoint_public_access = var.eks_params.cluster_endpoint_public_access
   cluster_enabled_log_types = var.eks_params.cluster_enabled_log_types
@@ -57,7 +57,7 @@ module "eks" {
   ]
 }
 resource "aws_iam_role" "eks_masters_access_role" {
-  name = "${var.environment}-masters-access-role"
+  name = "${var.cluster_name}-masters-access-role"
   path = "/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -73,7 +73,7 @@ resource "aws_iam_role" "eks_masters_access_role" {
     ]
   })
   inline_policy {
-    name = "${var.environment}-masters-access-policy"
+    name = "${var.cluster_name}-masters-access-policy"
 
     policy = jsonencode({
       Version = "2012-10-17"
@@ -88,7 +88,7 @@ resource "aws_iam_role" "eks_masters_access_role" {
   }  
 
   tags = {
-    Name  ="${var.environment}-access-role"
+    Name  ="${var.cluster_name}-access-role"
   }
 }
 
