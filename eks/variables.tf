@@ -178,14 +178,6 @@ variable "eks_managed_node_group_params" {
     max_unavailable_percentage = number
   }))
 }
-variable "eks_aws_auth_users" {
-  description = "IAM Users to be added to the aws-auth ConfigMap, one item in the set() per each IAM User"
-  type = set(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-}
 
 variable "vpc_params" {
   type = object({
@@ -196,23 +188,4 @@ variable "vpc_params" {
     enable_vpn_gateway     = bool
     enable_flow_log        = bool
   })
-}
-variable "karpenter_chart_version" {
-  description = "Karpenter Helm chart version to be installed"
-  type        = string
-}
-
-variable "karpenter_provisioner" {
-  type = list(object({
-    name              = string
-    instance-family = list(string)
-    instance-size     = list(string)
-    topology  = list(string)
-    labels            = optional(map(string))
-    taints = optional(object({
-      key    = string
-      value  = string
-      effect = string
-    }))
-  }))
 }
