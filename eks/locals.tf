@@ -9,12 +9,4 @@ locals {
     terraform_template_version = "v1.2.0"
   }
 
-  asg_tags = flatten([for k, v in module.eks.eks_managed_node_groups : [
-    for l, w in local.tags : {
-      sha : sha256("${k}${l}")
-      name : v.node_group_autoscaling_group_names[0]
-      key : l
-      value : w
-    }
-  ] if length(v.node_group_labels) > 0])
 }
