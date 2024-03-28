@@ -1,25 +1,30 @@
 name: Deploy to ECR
 
 on:
-  #workflow_dispatch
+  #workflow_dispatch  
   push:
     branches: [ main ]
-
-
+   
 env:
   TERRAFORM_VERSION: '1.7.5'
-  WORKING_DIRECTORY: eks
   ENVIRONMENT: dev
   ECR_REPOSITORY: test01-ecr-eks
   EKS_CLUSTER_NAME: eks-test01-cl
   AWS_REGION: us-east-1
   S3_BUCKET_NAME: eksstatebucket01 
   DYNAMODB_TABLE: S3_BUCKET_NAME-Dyno01
+
   
-
-
 jobs:
-  build: 
+  
+  terraform_workload:
+    name: 'Deploy workload infrastructure using Terraform'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: 'eks'
+  build:     
     name: Deployment
     runs-on: ubuntu-latest
     steps:
@@ -68,12 +73,10 @@ jobs:
             -backend-config=key='state' \
             -backend-config=dynamodb_table="$DYNAMODB_TABLE"
       shell: bash
-      working-directory: '${{ env.WORKING_DIRECTORY }}'
     - name: Run terraform validate
       id: 'tf-validate'
       run: terraform validate
       shell: bash
-      working-directory: '${{ env.WORKING_DIRECTORY }}'
     
     - name: Run terraform plan
       id: terraform-plan
@@ -84,13 +87,12 @@ jobs:
           -var 'environment=${{ env.ENVIRONMENT }}' \
           -out ${{ github.run_id }}.tfplan
       shell: bash
-      working-directory: '${{ env.WORKING_DIRECTORY }}'  
     
     - name: Publish  the plan Artifact
       uses: actions/upload-artifact@v3
       with:
           name: tf-plan
-          path: '${{ github.workspace }}${{ env.WORKING_DIRECTORY }}/${{ github.run_id }}.tfplan'
+          path: '${{ github.workspace }}/${{ github.run_id }}.tfplan'
         
     - name: Terraform apply
       id: apply
