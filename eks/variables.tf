@@ -51,18 +51,6 @@ variable "region" {
   default     = ""
 }
 
-variable "vpc_id" {
-  description = "VPC for EKS cluster"
-  type        = string
-  default     = ""
-}
-
-variable "subnet_ids" {
-  description = "List of subnet ids for EKS cluster"
-  type        = list(any)
-  default     = []
-}
-
 variable "tags" {
   description = "List of tags for EKS cluster"
   type        = map(any)
