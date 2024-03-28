@@ -104,4 +104,3 @@ resource "aws_iam_role_policy_attachment" "EC2InstanceProfileForImageBuilderECRC
   policy_arn = "arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilderECRContainerBuilds"
   role       = aws_iam_role.eks_masters_access_role.name
 }
-data "aws_caller_identity" "current" {}
