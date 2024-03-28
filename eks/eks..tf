@@ -1,6 +1,6 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.0"
+  version = "20.8.4"
   cluster_name    = "${var.environment}-eks-cluster"
   cluster_version = var.eks_version
   cluster_endpoint_public_access = var.eks_params.cluster_endpoint_public_access
@@ -18,14 +18,9 @@ module "eks" {
     }
   }
 
-    node_security_group_tags  = {
-    "karpenter.sh/discovery" = local.eks_cluster_name
-  }
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   control_plane_subnet_ids = module.vpc.intra_subnets
-
-  manage_aws_auth_configmap = true
 
   eks_managed_node_groups = {
     default = {
@@ -49,62 +44,5 @@ module "eks" {
       client_id = "sts.amazonaws.com"
     }
   }
-  aws_auth_users = var.eks_aws_auth_users
-
-  aws_auth_roles = [
-    {
-      rolearn  = aws_iam_role.eks_masters_access_role.arn
-      username = aws_iam_role.eks_masters_access_role.arn
-      groups   = ["system:masters"]
-    }
-  ]
-}
-resource "aws_iam_role" "eks_masters_access_role" {
-  name = "${var.environment}-masters-access-role"
-  path = "/"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          AWS: "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-        }
-      }
-    ]
-  })
-  inline_policy {
-    name = "${var.environment}-masters-access-policy"
-
-    policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Action   = ["eks:DescribeCluster*"]
-          Effect   = "Allow"
-          Resource = "*"
-        },
-      ]
-    })
-  }  
-
-  tags = {
-    Name  ="${var.environment}-access-role"
-  }
-}
-
-resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.eks_masters_access_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EKS" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eks_masters_access_role.name
-}
-resource "aws_iam_role_policy_attachment" "EC2InstanceProfileForImageBuilderECRContainerBuilds" {
-  policy_arn = "arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilderECRContainerBuilds"
-  role       = aws_iam_role.eks_masters_access_role.name
+  
 }

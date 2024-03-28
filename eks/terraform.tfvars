@@ -39,19 +39,4 @@ eks_managed_node_group_params = {
   }
 }
 
-eks_aws_auth_users  = [
-  {
-    userarn  = "arn:aws:iam::784184871882:user/sh01"
-    username = "sh01"
-    groups   = ["system:masters"]
-  }
-]
-karpenter_provisioner = {
-  name              = "default"
-  instance-family =  ["t3"]
-  instance-size     = ["small", "medium", "large"]
-  topology  = ["us-east-1a", "us-east-1b"]
-  labels            = {
-    created-by  = "karpenter"
-  }
-}
+
