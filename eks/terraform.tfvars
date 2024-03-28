@@ -55,25 +55,3 @@ karpenter_provisioner = {
     created-by  = "karpenter"
   }
 }
-resource "kubectl_manifest" "karpenter_provisioner" {
-  for_each = var.karpenter_provisioner
-
-  yaml_body = templatefile("${path.module}/configs/karpenter-provisioner.yaml.tmpl", {
-    name = each.key
-    instance-family = each.value.instance-family
-    instance-size = each.value.instance-size
-    topology  = each.value.topology
-    taints = each.value.taints
-    labels = merge(
-      each.value.labels,
-      {
-        component   = var.component
-        environment = var.environment
-      }
-    )
-  })
-
-  depends_on = [
-    helm_release.karpenter
-  ] 
-}
