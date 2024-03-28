@@ -1,17 +1,17 @@
 module "dev_cluster" {
-  source = "./cluster"
+  source = "eks"
 
   cluster_name = "dev"
 }
 
 module "staging_cluster" {
-  source = "./cluster"
+  source = "eks"
 
   cluster_name = "staging"
 }
 
 module "production_cluster" {
-  source = "./cluster"
+  source = "eks"
 
   cluster_name = "production"
 }
