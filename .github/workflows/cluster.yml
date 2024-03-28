@@ -17,13 +17,6 @@ env:
   DYNAMODB_TABLE: S3_BUCKET_NAME-Dyno01
   
 jobs:
-  iam_ci:
-    name: Input working directory
-    runs-on: ubuntu-latest
-    defaults:
-     run:
-       shell: bash       
-       working-directory: ./eks
   build:     
     name: Deployment
     runs-on: ubuntu-latest
