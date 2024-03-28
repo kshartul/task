@@ -18,10 +18,11 @@ terraform {
     }            
   }
 }
-
 provider "aws" {
-  region    = var.region
-  profile   = "default"
+  region = var.region
+  assume_role {
+    role_arn = var.role_arn
+  }
 }
 provider "kubernetes" {
   host                   = module.eks.cluster_endpoint

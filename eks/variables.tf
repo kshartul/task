@@ -45,30 +45,6 @@ variable "iam_role_use_name_prefix" {
   default     = "harness"
 }
 
-variable "instance_type" {
-  description = "The instance type for the EC2 node in the Managed Node Group"
-  type        = string
-  default     = "c5.4xlarge"
-}
-
-variable "min_size" {
-  description = "Minimum number of instances/nodes"
-  type        = number
-  default     = "1"
-}
-
-variable "max_size" {
-  description = "Maximum number of instances/nodes"
-  type        = number
-  default     = "1"
-}
-
-variable "desired_size" {
-  description = "Desired number of instances/nodes"
-  type        = number
-  default     = "1"
-}
-
 variable "region" {
   description = "EKS cluster region"
   type        = string
