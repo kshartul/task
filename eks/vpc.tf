@@ -1,12 +1,4 @@
 
-resource "aws_vpc" "env_vpc" {
-  cidr_block      = var.vpc_cidr
-
-  tags = {
-    environment = var.environment
-  }
-}
-
 #module "bootstrap" {
 #  source = "git@github.com:setevoy2/terraform-bootsrap.git"
 #  tfstates_s3_bucket_name = var.tfstates_s3_bucket_name

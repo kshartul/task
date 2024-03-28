@@ -186,9 +186,6 @@ variable "eks_aws_auth_users" {
     groups   = list(string)
   }))
 }
-variable "vpc_cidr" {
-  type = string   
-}
 
 variable "vpc_params" {
   type = object({
