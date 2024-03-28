@@ -257,8 +257,8 @@ variable "AMI_for_worker_nodes" {
   default     = "AL2_x86_64"
 }
 variable "instance_type_worker_nodes" {
-  description = "a list with the instances types to use for eks worker nodes"
-  type        = list(any)
+  description = "the instances types to use for eks worker nodes"
+  type        = string
   default     = "t3.medium"
 }
 variable "min_instances_node_group" {
