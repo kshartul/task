@@ -1,6 +1,7 @@
 
 environment   = "dev"
 region        = "us-east-1"
+karpenter_chart_version = "v0.30.0"
 vpc_params = {
   vpc_cidr               = "10.0.0.0/16"
   enable_nat_gateway     = true
@@ -45,3 +46,34 @@ eks_aws_auth_users  = [
     groups   = ["system:masters"]
   }
 ]
+karpenter_provisioner = {
+  name              = "default"
+  instance-family =  ["t3"]
+  instance-size     = ["small", "medium", "large"]
+  topology  = ["us-east-1a", "us-east-1b"]
+  labels            = {
+    created-by  = "karpenter"
+  }
+}
+resource "kubectl_manifest" "karpenter_provisioner" {
+  for_each = var.karpenter_provisioner
+
+  yaml_body = templatefile("${path.module}/configs/karpenter-provisioner.yaml.tmpl", {
+    name = each.key
+    instance-family = each.value.instance-family
+    instance-size = each.value.instance-size
+    topology  = each.value.topology
+    taints = each.value.taints
+    labels = merge(
+      each.value.labels,
+      {
+        component   = var.component
+        environment = var.environment
+      }
+    )
+  })
+
+  depends_on = [
+    helm_release.karpenter
+  ] 
+}

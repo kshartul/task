@@ -1,6 +1,6 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.8.4"
+  version = "19.0"
   cluster_name    = "${var.environment}-eks-cluster"
   cluster_version = var.eks_version
   cluster_endpoint_public_access = var.eks_params.cluster_endpoint_public_access
@@ -18,6 +18,9 @@ module "eks" {
     }
   }
 
+    node_security_group_tags  = {
+    "karpenter.sh/discovery" = local.eks_cluster_name
+  }
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   control_plane_subnet_ids = module.vpc.intra_subnets

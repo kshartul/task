@@ -18,6 +18,9 @@ module "endpoints" {
       cidr_blocks = [module.vpc.vpc_cidr_block]
     }
   }
+    private_subnet_tags = {
+    "karpenter.sh/discovery" = local.eks_cluster_name
+  }
 
   endpoints = {
     dynamodb = {
