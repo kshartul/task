@@ -94,4 +94,4 @@ jobs:
         
     - name: Terraform apply
       id: apply
-      run: terraform apply -auto-approve -var="cluster_name=dev"
+      run: terraform apply -auto-approve 
