@@ -29,10 +29,6 @@ data "aws_eks_cluster_auth" "this" {
   depends_on = [module.eks.cluster_id]
 }
 
-data "aws_route53_zone" "eks_hosted_zone" {
-  name         = var.aws_route53_zone
-  private_zone = true
-}
 
 data "aws_availability_zones" "available" {
   state = "available"
