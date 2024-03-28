@@ -7,6 +7,7 @@ variable "cluster_name" {
 variable "eks_version" {
   description = "Kubernetes version, will be used in AWS resources names and to specify which EKS version to create/update"
   type        = string
+  default     = "1.29"
 }
 variable "account_id" {
   description = "AWS account ID"
@@ -23,7 +24,7 @@ variable "ami_version" {
 variable "cluster_version" {
   description = "EKS cluster version"
   type        = string
-  default     = ""
+  default     = "1.29"
 }
 
 variable "gitops_agent_token" {
@@ -53,16 +54,19 @@ variable "instance_type" {
 variable "min_size" {
   description = "Minimum number of instances/nodes"
   type        = number
+  default     = "1"
 }
 
 variable "max_size" {
   description = "Maximum number of instances/nodes"
   type        = number
+  default     = "1"
 }
 
 variable "desired_size" {
   description = "Desired number of instances/nodes"
   type        = number
+  default     = "1"
 }
 
 variable "region" {

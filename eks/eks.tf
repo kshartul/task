@@ -1,3 +1,12 @@
+module "kms_key_eks" {
+  source              = "terraform-aws-modules/kms/aws"
+  region              = var.region
+  environment         = var.environment
+  name                = "eks"
+  key_policy          = data.aws_iam_policy_document.kms_key_policy_encrypt_logs.json
+  enable_key_rotation = true
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.0"
