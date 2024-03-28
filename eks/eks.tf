@@ -46,14 +46,7 @@ module "eks" {
       client_id = "sts.amazonaws.com"
     }
   }
-  aws_auth_users = var.eks_aws_auth_users
-  aws_auth_roles = [
-    {
-      rolearn  = aws_iam_role.eks_masters_access_role.arn
-      username = aws_iam_role.eks_masters_access_role.arn
-      groups   = ["system:masters"]
-    }
-  ]
+
 }
 resource "aws_iam_role" "eks_masters_access_role" {
   name = "${var.environment}-masters-access-role"
