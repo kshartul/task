@@ -14,17 +14,8 @@ env:
   AWS_REGION: us-east-1
   S3_BUCKET_NAME: eksstatebucket01 
   DYNAMODB_TABLE: S3_BUCKET_NAME-Dyno01
-
   
 jobs:
-  
-  terraform_workload:
-    name: 'Deploy workload infrastructure using Terraform'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: 'eks'
   build:     
     name: Deployment
     runs-on: ubuntu-latest
