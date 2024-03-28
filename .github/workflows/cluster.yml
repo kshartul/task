@@ -8,7 +8,7 @@ on:
 
 env:
   TERRAFORM_VERSION: '1.7.5'
-  WORKING_DIRECTORY: ./eks
+  WORKING_DIRECTORY: eks
   ENVIRONMENT: dev
   ECR_REPOSITORY: test01-ecr-eks
   EKS_CLUSTER_NAME: eks-test01-cl
