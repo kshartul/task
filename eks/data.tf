@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "kms_key_policy_encrypt_logs" {
       test     = "ArnLike"
       variable = "kms:EncryptionContext:aws:logs:arn"
       values = [
-        "arn:aws:logs:${var.region}:${data.aws_caller_identity.id_account.id}:*"
+        "arn:aws:logs:${var.region}:${data.aws_caller_identity.current.account_id}:*"
       ]
     }
   }
