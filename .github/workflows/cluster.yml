@@ -6,8 +6,9 @@ on:
     branches: [ main ]
    
 env:
+  TF_LOG: INFO
   TERRAFORM_VERSION: '1.7.5'
-  WORKING_DIRECTORY: ./eks
+  #WORKING_DIRECTORY: ./eks
   ENVIRONMENT: dev
   ECR_REPOSITORY: test01-ecr-eks
   EKS_CLUSTER_NAME: eks-test01-cl
@@ -16,6 +17,13 @@ env:
   DYNAMODB_TABLE: S3_BUCKET_NAME-Dyno01
   
 jobs:
+  iam_ci:
+    name: Input working directory
+    runs-on: ubuntu-latest
+    defaults:
+     run:
+       shell: bash       
+       working-directory: ./eks
   build:     
     name: Deployment
     runs-on: ubuntu-latest
