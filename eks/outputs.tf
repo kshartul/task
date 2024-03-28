@@ -26,10 +26,6 @@ output "eks_oidc_provider_arn" {
   value = module.eks.oidc_provider_arn
 }
 
-  output "eks_masters_access_role" {
-  value = aws_iam_role.eks_masters_access_role.arn
-}
-
 output "env_name" {
   value = var.environment
 }
