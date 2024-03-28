@@ -37,3 +37,11 @@ eks_managed_node_group_params = {
     max_unavailable_percentage = 50
   }
 }
+
+eks_aws_auth_users  = [
+  {
+    userarn  = "arn:aws:iam::784184871882:user/sh01"
+    username = "sh01"
+    groups   = ["system:masters"]
+  }
+]
