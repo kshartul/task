@@ -254,19 +254,23 @@ variable "kms_key_deletion_window_in_days" {
 variable "AMI_for_worker_nodes" {
   description = "the AWS AMI to use in the worker nodes"
   type        = string
+  default     = "AL2_x86_64"
 }
 variable "instance_type_worker_nodes" {
   description = "a list with the instances types to use for eks worker nodes"
   type        = list(any)
+  default     = "t3.medium"
 }
 variable "min_instances_node_group" {
   description = "minimum number of instance to use in the node group"
   type        = number
+  default     = 1
 }
 
 variable "max_instances_node_group" {
   description = "max number of instance to use in the node group"
   type        = number
+   default     = 2
 }
 
 variable "enable_kms_key_rotation" {
