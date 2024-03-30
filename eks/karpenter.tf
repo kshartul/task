@@ -1,16 +1,16 @@
 data "aws_ecrpublic_authorization_token" "token" {}
 
 module "karpenter" {
-  source = "terraform-aws-modules/eks/aws//modules/karpenter"
+  source       = "terraform-aws-modules/eks/aws//modules/karpenter"
+  tags         = var.tags
+  cluster_name = module.eks_cluster.cluster_name
 
-  cluster_name = module.eks.cluster_name
+  irsa_oidc_provider_arn       = module.eks_cluster.oidc_provider_arn
+  iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
 
-  irsa_oidc_provider_arn          = module.eks.oidc_provider_arn
-  irsa_namespace_service_accounts = ["karpenter:karpenter"]
-
-  create_iam_role      = false
-  iam_role_arn         = module.eks.eks_managed_node_groups["default"].iam_role_arn
-  irsa_use_name_prefix = false
+  policies = {
+    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  }
 }
 
 resource "helm_release" "karpenter" {
