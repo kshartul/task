@@ -39,4 +39,3 @@ eks_managed_node_group_params = {
   }
 }
 
-

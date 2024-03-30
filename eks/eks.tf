@@ -17,7 +17,9 @@ module "eks" {
       most_recent = true
     }
   }
-
+   node_security_group_tags  = {
+    "karpenter.sh/discovery" = local.eks_cluster_name
+  }
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   control_plane_subnet_ids = module.vpc.intra_subnets
@@ -45,4 +47,17 @@ module "eks" {
     }
   }
   
+}
+
+module "karpenter" {
+  source = "terraform-aws-modules/eks/aws//modules/karpenter"
+
+  cluster_name = module.eks.cluster_name
+
+  irsa_oidc_provider_arn          = module.eks.oidc_provider_arn
+  irsa_namespace_service_accounts = ["karpenter:karpenter"]
+
+  create_iam_role      = false
+  iam_role_arn         = module.eks.eks_managed_node_groups["default"].iam_role_arn
+  irsa_use_name_prefix = false
 }

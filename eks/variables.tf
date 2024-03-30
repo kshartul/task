@@ -157,8 +157,6 @@ variable "cloudwatch_log_group_kms_key_id" {
   type        = string
   default     = null
 }
-
-
 variable "eks_params" {
   description = "EKS cluster itslef parameters"
   type = object({
@@ -188,4 +186,9 @@ variable "vpc_params" {
     enable_vpn_gateway     = bool
     enable_flow_log        = bool
   })
+}
+
+variable "karpenter_chart_version" {
+  description = "Karpenter Helm chart version to be installed"
+  type        = string
 }
