@@ -32,10 +32,10 @@ resource "helm_release" "karpenter" {
     value = module.eks.cluster_endpoint
   }
 
-  set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.karpenter.irsa_arn
-  }
+ # set {
+ #   name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+ #   value = module.karpenter.irsa_arn
+ # }
 
   set {
     name = "serviceAccount.annotations.eks\\.amazonaws\\.com/sts-regional-endpoints"
