@@ -1,4 +1,3 @@
-
 environment   = "dev"
 region        = "us-east-1"
 karpenter_chart_version = "v0.30.0"
@@ -39,3 +38,12 @@ eks_managed_node_group_params = {
   }
 }
 
+karpenter_provisioner = {
+  name              = "default"
+  instance-family =  ["t3"]
+  instance-size     = ["small", "medium", "large"]
+  topology  = ["us-east-1a", "us-east-1b"]
+  labels            = {
+    created-by  = "karpenter"
+  }
+}

@@ -1,0 +1,37 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: ${name}
+spec:
+  
+%{ if taints != null ~}
+  taints:
+    - key: ${taints.key}
+      value: ${taints.value}
+      effect: ${taints.effect}
+%{ endif ~}
+%{ if labels != null ~} 
+  labels:
+  %{ for k, v in labels ~}
+    ${k}: ${v}
+  %{ endfor ~}    
+%{ endif ~}
+
+  requirements:
+    - key: karpenter.k8s.aws/instance-family
+      operator: In
+      values: ${jsonencode(instance-family)}
+    - key: karpenter.k8s.aws/instance-size
+      operator: In
+      values: ${jsonencode(instance-size)}
+    - key: topology.kubernetes.io/zone
+      operator: In
+      values: ${jsonencode(topology)}
+  
+providerRef:
+    name: default
+consolidation: 
+    enabled: true
+kubeletConfiguration:
+    maxPods: 100
+    ttlSecondsUntilExpired: 2592000
