@@ -2,15 +2,19 @@ data "aws_ecrpublic_authorization_token" "token" {}
 
 module "karpenter" {
   source       = "terraform-aws-modules/eks/aws//modules/karpenter"
-  tags         = var.tags
   cluster_name = module.eks.cluster_name
 
-  irsa_oidc_provider_arn       = module.eks.oidc_provider_arn
-  iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
+  create_node_iam_role = false
+  node_iam_role_arn    = module.eks.eks_managed_node_groups["initial"].iam_role_arn
 
-  policies = {
-    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  }
+  # Since the nodegroup role will already have an access entry
+  create_access_entry = false
+
+  tags = {
+    Environment = "dev"
+    Terraform   = "true"
+
+}
 }
 
 

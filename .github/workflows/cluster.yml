@@ -90,8 +90,8 @@ jobs:
           name: tf-plan
           path: '${{ github.workspace }}${{ env.WORKING_DIRECTORY }}/${{ github.run_id }}.tfplan'
         
-    - name: Terraform destroy
-      id: destroy
-      run: terraform destroy -auto-approve 
+    - name: Terraform apply
+      id: apply
+      run: terraform apply -auto-approve 
       shell: bash
       working-directory: '${{ env.WORKING_DIRECTORY }}'  
