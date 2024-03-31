@@ -4,9 +4,9 @@ module "karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
   cluster_name = module.eks.cluster_name
   irsa_oidc_provider_arn          = module.eks.oidc_provider_arn
-  irsa_namespace_service_accounts = ["karpenter:karpenter"]
+  #irsa_namespace_service_accounts = ["karpenter:karpenter"]
   create_iam_role      = false
-  iam_role_arn         = module.eks.eks_managed_node_groups["default"].iam_role_arn
+  #iam_role_arn         = module.eks.eks_managed_node_groups["default"].iam_role_arn
   irsa_use_name_prefix = false
 }
 
