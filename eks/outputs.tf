@@ -42,10 +42,6 @@ output "vpc_intra_subnets" {
   value = [module.subnet_addrs.network_cidr_blocks["intra-1"], module.subnet_addrs.network_cidr_blocks["intra-2"]]
 }
 
-output "karpenter_irsa_arn" {
-  value = module.karpenter.irsa_arn
-}
-
 output "karpenter_aws_node_instance_profile_name" {
   value = module.karpenter.instance_profile_name
 }
