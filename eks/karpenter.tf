@@ -2,17 +2,12 @@ data "aws_ecrpublic_authorization_token" "token" {}
 
 module "karpenter" {
   source       = "terraform-aws-modules/eks/aws//modules/karpenter"
+
   cluster_name = module.eks.cluster_name
 
-  node_iam_role_additional_policies = {
+ node_iam_role_additional_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
-
-  tags = {
-    Environment = "dev"
-    Terraform   = "true"
-
-}
 }
 
 
@@ -37,6 +32,10 @@ resource "helm_release" "karpenter" {
     value = module.eks.cluster_endpoint
   }
 
+  set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = module.karpenter.irsa_arn
+  }
 
   set {
     name = "serviceAccount.annotations.eks\\.amazonaws\\.com/sts-regional-endpoints"
