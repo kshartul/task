@@ -1,6 +1,5 @@
 data "aws_ecrpublic_authorization_token" "token" {}
 
-
 module "karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
   cluster_name = module.eks.cluster_name
@@ -10,8 +9,6 @@ module "karpenter" {
   iam_role_arn         = module.eks.eks_managed_node_groups["default"].iam_role_arn
   irsa_use_name_prefix = false
 }
-
-data "aws_ecrpublic_authorization_token" "token" {}
 
 resource "helm_release" "karpenter" {
   namespace        = "karpenter"
