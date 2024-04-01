@@ -90,9 +90,7 @@ module "vpc" {
   name = "${var.environment}-vpc"
   cidr = var.vpc_params.vpc_cidr
   azs = data.aws_availability_zones.available.names
-    private_subnet_tags = {
-    "karpenter.sh/discovery" = local.eks_cluster_name
-  }
+    
   public_subnets  = [module.subnet_addrs.network_cidr_blocks["public-1"], module.subnet_addrs.network_cidr_blocks["public-2"]]
   private_subnets = [module.subnet_addrs.network_cidr_blocks["private-1"], module.subnet_addrs.network_cidr_blocks["private-2"]]
   intra_subnets   = [module.subnet_addrs.network_cidr_blocks["intra-1"], module.subnet_addrs.network_cidr_blocks["intra-2"]]

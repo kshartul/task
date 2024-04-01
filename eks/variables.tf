@@ -187,29 +187,3 @@ variable "vpc_params" {
     enable_flow_log        = bool
   })
 }
-
-variable "karpenter_chart_version" {
-  description = "Karpenter Helm chart version to be installed"
-  type        = string
-}
-
-variable "karpenter_provisioner" {
-  type = list(object({
-    name              = string
-    instance-family = list(string)
-    instance-size     = list(string)
-    topology  = list(string)
-    labels            = optional(map(string))
-    taints = optional(object({
-      key    = string
-      value  = string
-      effect = string
-    }))
-  }))
-}
-variable "component" {
-  description = "Karpenter provisioner component"
-  type        = string
-  default     = ""
-}
-

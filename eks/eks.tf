@@ -17,9 +17,8 @@ module "eks" {
       most_recent = true
     }
   }
-   node_security_group_tags  = {
-    "karpenter.sh/discovery" = local.eks_cluster_name
-  }
+   
+
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   control_plane_subnet_ids = module.vpc.intra_subnets
