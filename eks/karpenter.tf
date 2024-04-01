@@ -78,6 +78,6 @@ resource "kubectl_manifest" "karpenter_node_template" {
 
 resource "kubectl_manifest" "karpenter_provisioner" {
   depends_on = [helm_release.karpenter]
-  yaml_body  = file("${path.module}/karpenter-provisioner.yaml")
+  yaml_body  = file("${path.module}/configs/karpenter-provisioner.yaml")
 }
 
