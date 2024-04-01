@@ -23,7 +23,7 @@ resource "helm_release" "karpenter" {
 
   set {
     name  = "settings.aws.clusterName"
-    value = local.eks_cluster_name
+    value = module.eks.cluster_name
   }
 
   set {
