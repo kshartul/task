@@ -2,8 +2,6 @@
 ################################################################################
 #                            Data                                              #
 ################################################################################
-
-
 data "aws_ami" "eks_default" {
   most_recent = true
   owners      = ["amazon"]
@@ -12,23 +10,19 @@ data "aws_ami" "eks_default" {
     values = ["amazon-eks-node-${var.cluster_version}-v*"]
   }
 }
-
 data "aws_eks_cluster" "cluster" {
   name       = module.eks.cluster_name
   depends_on = [module.eks.cluster_id]
 }
-
 data "http" "eks_cluster_readiness" {
   url         = join("/", [data.aws_eks_cluster.cluster.endpoint, "healthz"])
   ca_cert_pem = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
   depends_on  = [module.eks.cluster_id]
 }
-
 data "aws_eks_cluster_auth" "this" {
   name       = module.eks.cluster_name
   depends_on = [module.eks.cluster_id]
 }
-
 data "aws_caller_identity" "current" {}
 
 data "aws_availability_zones" "available" {
@@ -38,7 +32,7 @@ data "aws_iam_policy" "ebs_csi_policy" {
   arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
 data "tls_certificate" "cluster" {
-  url = aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+  url = data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
   depends_on = [
     aws_eks_cluster.cluster
   ]
