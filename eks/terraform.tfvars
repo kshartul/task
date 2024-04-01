@@ -37,3 +37,13 @@ eks_managed_node_group_params = {
     max_unavailable_percentage = 50
   }
 }
+
+karpenter_provisioner = {
+  name              = "default"
+  instance-family =  ["t3"]
+  instance-size     = ["small", "medium", "large"]
+  topology  = ["us-east-1a", "us-east-1b"]
+  labels            = {
+    created-by  = "karpenter"
+  }
+}
