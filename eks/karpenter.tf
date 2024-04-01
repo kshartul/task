@@ -69,7 +69,6 @@ resource "kubectl_manifest" "karpenter_provisioner" {
       }
     )
   })
-
   depends_on = [
     helm_release.karpenter
   ] 
