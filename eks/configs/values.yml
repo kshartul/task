@@ -1,0 +1,13 @@
+data "template_file" "karpenter" {
+  template = <<EOF
+serviceAccount:
+   annotations:
+       eks.amazonaws.com/role-arn: "${aws_iam_role.karpenter_controller.arn}"
+settings:
+  aws:
+    clusterName: "${data.aws_eks_cluster.cluster.id}"
+    clusterEndpoint: "${data.aws_eks_cluster.cluster.endpoint}"
+    defaultInstanceProfile: "${aws_iam_instance_profile.karpenter.name}"
+    interruptionQueueName: "${var.cluster_name}-karpenter-sqs-queue"
+   EOF
+}
