@@ -1,6 +1,5 @@
 environment   = "dev"
 region        = "us-east-1"
-karpenter_chart_version = "v0.30.0"
 vpc_params = {
   vpc_cidr               = "10.0.0.0/16"
   enable_nat_gateway     = true
