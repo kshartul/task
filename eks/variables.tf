@@ -210,5 +210,6 @@ variable "karpenter_provisioner" {
 variable "component" {
   description = "Karpenter provisioner component"
   type        = string
+  default     = ""
 }
 
