@@ -36,3 +36,4 @@ eks_managed_node_group_params = {
     max_unavailable_percentage = 50
   }
 }
+

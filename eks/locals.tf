@@ -10,3 +10,30 @@ locals {
   }
 
 }
+
+locals {
+  capacity_type = ["on-demand"]
+  allowed_instance_types = [
+    "m5.xlarge",
+    "m5.2xlarge",
+    "c5.large",
+    "c5.xlarge",
+    "c5.2xlarge",
+    "m5.large",
+  ]
+  allowed_instance_type_java = [
+    "m5.large",
+    "m5.xlarge",
+    "m5.2xlarge",
+    "m5.4xlarge",
+  ]
+  allowed_instance_type_golang = [
+    "c5.large",
+    "c5.xlarge",
+    "c5.2xlarge"
+  ]
+}
+
+
+data "aws_region" "current" {}
+
