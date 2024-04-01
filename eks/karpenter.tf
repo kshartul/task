@@ -53,7 +53,7 @@ resource "helm_release" "karpenter" {
   }
 }
 resource "kubectl_manifest" "karpenter_provisioner" {
-  for_each = toset(var.karpenter_provisioner)
+  for_each = toset(var.karpenter_provisioner) 
 
   yaml_body = templatefile("${path.module}/configs/karpenter-provisioner.yaml.tmpl", {
     name = each.key
