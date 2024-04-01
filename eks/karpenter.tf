@@ -53,27 +53,18 @@ resource "helm_release" "karpenter" {
   }
 }
 resource "kubectl_manifest" "karpenter_provisioner" {
-  for_each = toset(var.karpenter_provisioner) 
-
-  yaml_body = templatefile("${path.module}/configs/karpenter-provisioner.yaml.tmpl", {
-    name = each.key
-    instance-family = each.value.instance-family
-    instance-size = each.value.instance-size
-    topology  = each.value.topology
-    taints = each.value.taints
-    labels = merge(
-      each.value.labels,
-      {
-        component   = var.component
-        environment = var.environment
-      }
-    )
-  })
-  depends_on = [
-    helm_release.karpenter
-  ] 
+  depends_on = [helm_release.karpenter]
+  yaml_body  = file("${path.module}/karpenter-provisioner.yaml")
 }
 
+resource "kubectl_manifest" "karpenter_node_template" {
+  depends_on = [helm_release.karpenter]
+
+  yaml_body = templatefile("${path.module}/karpenter-node-template.yaml", {
+    tags             = var.tags
+    eks_cluster_name = module.eks_cluster.cluster_name
+  })
+}
 resource "kubectl_manifest" "karpenter_node_template" {
   yaml_body = <<-YAML
     apiVersion: karpenter.k8s.aws/v1alpha1
