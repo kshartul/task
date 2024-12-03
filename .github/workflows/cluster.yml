@@ -85,7 +85,7 @@ jobs:
       working-directory: '${{ env.WORKING_DIRECTORY }}'  
     
     - name: Publish  the plan Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: tf-plan
           path: '${{ github.workspace }}${{ env.WORKING_DIRECTORY }}/${{ github.run_id }}.tfplan'
