@@ -400,7 +400,7 @@
                                     {
                                         "name": "logAnalyticsWorkspaceId",
                                         "type": "string",
-                                        "value": "@first(triggerBody()?['data']?['essentials']?['alertTargetIDs'])"
+                                        "value": "@if(empty(triggerBody()?['data']?['essentials']?['alertTargetIDs']), parameters('logAnalytics'), first(triggerBody()?['data']?['essentials']?['alertTargetIDs']))"
                                     }
                                 ]
                             },
